@@ -2,6 +2,7 @@
 	
 	$rawdata = file_get_contents('php://input');
 	$tag_code = explode('=', explode('&', $rawdata)[0])[1];
+	$reader_serial = explode('=', explode('&', $rawdata)[1])[1];
 
 	require_once('pushNotification.php');
 	require_once('../phpDatabase/db_connect.php');
@@ -17,8 +18,11 @@
 		echo "Success";
 	}
 	
+	$data = array();
+	$data[0] = $reader_serial;
+	
 	$push = new PUSH();
-	$push->sendPush($result->fetch_assoc()["passport_number"], 4);
+	$push->sendPush($result->fetch_assoc()["passport_number"], $data);
 	
 	
 ?>

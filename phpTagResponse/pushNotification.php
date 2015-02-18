@@ -11,7 +11,7 @@ class PUSH {
 	}
 	//send push
 	function sendPush($passporNo, $data){
-		$payload = '{"where":{"passportNo":"'.$passporNo.'"}, "data":{"alert":"hi", "title":"Im scanned"}}';
+		$payload = '{"where":{"passportNo":"'.$passporNo.'"}, "data":{"alert":"Explore points of interest around you", "title":"Landing", "payload":{"serial_id":"'.$data[0].'", "total_pois":"3", "poi1":"Restaurant", "poi2":"Cafe", "poi3":"Toilets"}}}';
 		echo stripslashes($payload)."\n";
 		$rest = curl_init();
 		curl_setopt($rest,CURLOPT_URL,$this->url);

@@ -3,8 +3,7 @@
 class DB_FUNCTIONS {
 
 	
-	fun
-	}ction __construct(){
+	function __construct(){
 		require_once 'db_connect.php';
 	
 	function __destruct(){
