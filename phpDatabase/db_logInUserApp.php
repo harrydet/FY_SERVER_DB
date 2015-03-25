@@ -12,5 +12,9 @@
 	
 	$result = $helper->getUserByTicketPin($ticket_no, $pin);
 	$response = $result->fetch_assoc();
-	echo json_encode($response);
+	if($response != null){
+		echo json_encode(array("result" => $response), JSON_FORCE_OBJECT);
+	} else {
+		echo json_encode(array("result" => "user_not_found", "payload" => $result));
+	}
 ?>

@@ -25,18 +25,24 @@ error_reporting(-1);
 	$sql = "INSERT INTO Person (first_name, last_name, passport_number, date_of_birth) VALUES ('$first_name', '$last_name', '$passport_no', '$dob')";
 	
 	if($conn->query($sql) === false) {
-		trigger_error('Wrong SQL: ' . $sql . ' Error: ' . $conn->error, E_USER_ERROR);
-		echo "Error";
+		$responseReader = array("status" => "error", "details" => $conn->error);
 	} else {
-		echo "Success";
+		$responseReader = array("status" => "success", "details" => $conn->error);
 	}	
 	
 	$sql = "INSERT INTO RFID_Tag (tag_code, protocol, last_read_from, person_id) VALUES ('$tag_code', '$tag_protocol', '$last_read', (SELECT MAX(person_id) AS person_id FROM Person))";
 	if($conn->query($sql) === false) {
-		trigger_error('Wrong SQL: ' . $sql . ' Error: ' . $conn->error, E_USER_ERROR);
-		echo "Error";
+		$responseTag = array("status" => "error", "details" => $conn->error);
+		if($responseReader["status"] == "success"){
+			$sql = "DELETE FROM Person WHERE passport_number='$passport_no'";
+			$conn->query($sql);
+		}
 	} else {
-		echo "Success";
+		$responseTag = array("status" => "success", "details" => $conn->error);
 	}
+	
+	echo json_encode(array("reply_reader" => $responseReader, "reply_tag" => $responseTag));
+	
+	
 ?>
 	

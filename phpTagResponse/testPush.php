@@ -7,6 +7,5 @@
 	$data[0] = 335392;
 	
 	$push = new PUSH();
-	$push->sendPush('001001', $data);
-	
+	$push->sendPush('001002', $data);
 ?>
